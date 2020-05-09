@@ -1,0 +1,77 @@
+<br>
+<br>
+<div class="container">
+  <p *ngIf="alert">
+    <ngb-alert [type]="alert.type" (close)="alert = null">{{ alert.message }}</ngb-alert>
+  </p>
+  <h3>Funcionários Cadastrados</h3>
+  <br>
+  <div class="input-group mb-3">
+    <input #slcFiltro type="text" class="form-control" [(ngModel)]="filtro" placeholder="Filtrar por Nome" onkeypress="return /[a-zA-Z ]/i.test(event.key)" [hidden] = "tipoFiltro != 'nome'">
+    <input #slcFiltro type="number" class="form-control" [(ngModel)]="filtro" placeholder="Filtrar por Idade" onkeypress="return /[0-9]/i.test(event.key)" [hidden] = "tipoFiltro != 'idade'">
+    <input #slcFiltro type="text" class="form-control" [(ngModel)]="filtro" placeholder="Filtrar por Habilidade" onkeypress="return /[a-zA-Z#]/i.test(event.key)" [hidden] = "tipoFiltro != 'habilidade'">
+    <div class="input-group-prepend">
+      <select class="btn btn-outline-primary btn-sm dropdown-toggle" [(ngModel)]="tipoFiltro">
+        <option value="nome" onselect="slcFiltro.reset; filtro=null;">Nome</option>
+        <option value="idade" onselect="slcFiltro.reset; filtro=null;">Idade</option>
+        <option value="habilidade" onselect="slcFiltro.reset; filtro=null;">Habilidade</option>
+      </select>
+      <button *ngIf="slcFiltro.value != ''" 
+          class="btn btn-danger btn-sm" 
+          (click)="slcFiltro.reset; filtro=null;" 
+          style="margin-left: 5px;"
+          type="button">Limpar
+      </button>
+    </div>
+  </div>
+  <div>   
+    <label>Exibir somente sexo:</label>
+    <input type="radio" id="m" name="gender" value="M" (click)="filtrarSexo('M')" style="margin-left: 5px;">
+    <label for="m">Masculino</label>
+    <input type="radio" id="f" name="gender" value="F" (click)="filtrarSexo('F')" style="margin-left: 5px;">
+    <label for="f">Feminino</label>
+    <input type="radio" id="t" name="gender" value="T" (click)="filtrarSexo('T')" checked="true" style="margin-left: 5px;">
+    <label for="t">Todos</label>
+  </div>
+  <br>
+  <button class="btn btn-outline-primary" matTooltip="Cadastrar novo cliente." matTooltipPosition="right" (click)="insertFuncionario()" style="margin-bottom: 10px;">
+    Novo Funcionario +
+  </button>
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Nome</th>
+        <th scope="col">Idade</th>
+        <th scope="col">Data Nascimento</th>
+        <th scope="col">Sexo</th>
+        <th scope="col">Email</th>
+        <th scope="col">Habilidades</th>
+        <th scope="col">Ações</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let funcionario of funcionarios | 
+                  filtroFuncionario: filtro : tipoFiltro |
+                  paginate: { itemsPerPage: 5, currentPage: paginaAtual }; let i = index">
+      <tr>
+        <td scope="row">{{ nomeFormatado(funcionario.nome) }}</td>
+        <td scope="row"><b>{{ funcionario.idade }}</b></td>
+        <td scope="row">{{ dataFormatada(funcionario.dataNascimento) }}</td>
+        <td scope="row">{{ funcionario.sexo }}</td>
+        <td scope="row">{{ funcionario.email }}</td>
+        <td scope="row">{{ habilidadesToString(funcionario.habilidades) }}</td>
+        <td scope="row">
+          <button class="btn btn-outline-warning btn-sm" type="button" id="updateFuncionario" (click)="updateFuncionario(funcionario)" style="margin-right: 10px;">Editar</button>
+          <button class="btn btn-outline-danger btn-sm" type="button" id="deleteFuncionario" (click)="deleteFuncionario(funcionario.id)">Deletar</button>
+        </td>
+      </tr>
+    </tbody>
+    <p  *ngIf="!funcionarios || funcionarios.length == 0">Nenhum funcionário encontrado.</p>
+  </table>
+  <pagination-controls
+			class="pagination" 
+			(pageChange)="paginaAtual = $event" 
+			previousLabel="Anterior" 
+			nextLabel="Próxima"
+			responsive="true">
+	</pagination-controls>
+</div>

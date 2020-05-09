@@ -1,0 +1,60 @@
+<div class="modal-header">
+  <div class="modal-title sessao"><b>Editar Funcionário</b></div>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
+      <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class = "modal-body">
+  <div class="container">
+      <p *ngIf="alert">
+          <ngb-alert [type]="alert.type" (close)="alert = null">{{ alert.message }}</ngb-alert>
+      </p>
+      <form [formGroup]="formFuncionario">
+      <div class="form-row">
+          <div class="form-group col-9">
+          <label>Nome:</label>
+          <input formControlName="nome" type="text" class="form-control" onkeypress="return /[a-zA-Z ]/i.test(event.key)" required>
+          </div>
+          <div class="form-group col-auto">
+          <label>Data de Nascimento:</label>
+          <input formControlName="dataNascimento" type="date" class="form-control" pattern="99/99/9999" required>
+          </div>
+      </div>
+      <div class="form-row">
+          <div class="form-group col-auto">
+          <label>Sexo:</label>
+          <select formControlName="sexo" class="form-control" required>
+              <option value="M">MASCULINO</option>
+              <option value="F">FEMININO</option>
+          </select>
+          </div>
+          <div class="form-group col-auto">
+          <label>Email:</label>
+          <input formControlName="email" type="text" placeholder="email@email.com" class="form-control" required>
+          </div>
+          <div class="form-group col-auto">
+          <label>Habilidades:</label>
+          <select class="form-control" formControlName="idHabilidade">
+              <option *ngFor="let habilidade of habilidades" value="{{habilidade.id}}">{{habilidade.descricao}}</option>
+          </select>
+          </div>
+          <div class="col-auto">
+          <button class="btn btn-outline-success" type="button" (click)="adicionarHabilidade(formFuncionario.controls.idHabilidade.value)" style="margin-top: 31px;"> + </button>
+          </div>
+      </div>
+      <div class="form-row" *ngIf="habilidadesDoFuncionario.length > 0">
+          <div class="form-group">
+          <label>Habilidades Adicionadas:</label>
+          <div *ngFor="let habilidade of habilidadesDoFuncionario">
+              <span class="col-auto">
+              {{habilidade.descricao}} <u><a class="button-link" (click)="removerHabilidade(habilidade)"> Remover </a></u>
+              </span>
+          </div>
+          </div>
+      </div>
+      </form>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-outline-primary" type="button" [disabled]="disableSubmit()" id="udateCliente" (click)="updateFuncionario(formFuncionario.value)">Editar</button>
+</div>

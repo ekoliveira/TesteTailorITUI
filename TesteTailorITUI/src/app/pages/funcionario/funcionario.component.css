@@ -1,0 +1,15 @@
+.button-link{
+    color: red;
+    cursor: pointer;
+}
+
+.filtroButton{
+    width: 36px;
+    border-radius: 25px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.pagination /deep/ .ngx-pagination .current {
+    background: #007bff;
+}
