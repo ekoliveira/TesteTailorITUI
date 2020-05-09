@@ -1,16 +1,8 @@
 
 
-# Teste Younder
+# Teste Tailor IT UI
 
 **Componentes utilizados**
-
-Back-End:
-
- - .NET CORE 2.2
- - Arquitetura MVC
- - EntityFrameWorkCore 2.2.0
- - SQL Server Local DB
- - Swagger
 
 Front-End:
 
@@ -18,25 +10,10 @@ Front-End:
  - NgxBootstrap
  - Bootstrap 4
  - HashLocationStrategy
-
-Teste:
-
- - xUnit
- - EntityFrameworkCore.InMemory 2.2.0
+ - Filtro por PIPE
+ - Paginação com NGX Pagination
 
 **Passo-a-Passo para execução:**
-
-Execução do back-end:
-
-1º. Abra o projeto (**TesteYounder.sln**) no Visual Studio;
-
-2º. Abra o Package Manager Console em **Tools > NuGet Package Manager > Package Manager Console**;
-
-3º. No console selecione "**src\Api\TesteYounder.Api**" em Default Project;
-
-4º. No console digite o seguinte comando sem aspas "**Update-Database**" depois pressione "**ENTER**"  e aguarde a criação do banco de dados;
-
-5º. Feito isso, basta iniciar o projeto "**TesteYounder.Api**";
 
 Execução do front-end:
 
